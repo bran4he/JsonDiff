@@ -7,17 +7,17 @@ as Data Migration of policy in insurance industry, we need compare 01 json struc
 ### HOW-TO-USE
 
 
-1. prepare
+- prepare
 
 > cd 'root of poejct_dir'
 
-2. compile and package
+- compile and package
 
 > mvn clean package
 
-4. add json_file01 json_file02 in the same folder of jar
+- add json_file01 json_file02 in the same folder of jar
 
-5. add param and execute
+- add param and execute
 
 > java -jar jsonDiff.jar json_file01 json_file02
 
