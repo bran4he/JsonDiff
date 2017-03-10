@@ -175,7 +175,7 @@ public class Convert {
 		
 		
 		String path = System.getProperty("user.dir");
-		File convertFile = new File(path + File.separator + name1 +"_vs_"+ name2 + System.currentTimeMillis() + ".xlsx");
+		File convertFile = new File(path + File.separator + name1 +"_vs_"+ name2 +"_" +System.currentTimeMillis() + ".xlsx");
 		
     	FileOutputStream fileOut = null;
     	try {

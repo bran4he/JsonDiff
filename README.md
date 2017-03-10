@@ -7,23 +7,30 @@ as Data Migration of policy in insurance industry, we need compare 01 json struc
 ### HOW-TO-USE
 
 
-- prepare
+- compiler and package jar
+ 
+```
+cd JsonDiff
+mvn clean package
+```
 
-> cd 'root of poejct_dir'
+- execute
 
-- compile and package
+```
+/*copy json_file01 and json_file02 to jar folder*/
+java -jar jsonDiff.jar json_file01 json_file02
+/* or save log to app.log*/
+java -jar jsonDiff.jar json_file01 json_file02 > app.log
 
-> mvn clean package
+```
 
-- add json_file01 json_file02 in the same folder of jar
+- result
 
-- add param and execute
-
-> java -jar jsonDiff.jar json_file01 json_file02
+> {json_file01}_vs_{json_file02}_{currentmils}.xlsx
 
 ### SAMPLE
 [json_file01](/compare01.json)
 
 [json_file02](/compare02.json)
 
-[resut excel file ](/compare01.json_vs_compare02.json1489066399274.xlsx)
+[resut excel file ](/compare01.json_vs_compare02.json_1489066399274.xlsx)
