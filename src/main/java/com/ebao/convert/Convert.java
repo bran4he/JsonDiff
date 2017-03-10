@@ -84,12 +84,6 @@ public class Convert {
 		Map<String, List<String>> mapCore = getMapData(getJson(args[0]));
 		Map<String, List<String>> mapDc = getMapData(getJson(args[1]));
 
-		Set<String> keyCore = mapCore.keySet();
-		Set<String> keyDc = mapDc.keySet();
-		
-		List<String> keyLst = new ArrayList<String>();
-		keyLst.addAll(keyCore);
-		keyLst.addAll(keyDc);
 		
 		//<"Policy", <"POI", {"POI", Y, Y}>>
 		Map<String, Map<String, KeyResult>> result = new HashMap<String, Map<String, KeyResult>>();
@@ -117,6 +111,11 @@ public class Convert {
 				for(String name : childNames){
 					if(rsMapOld.containsKey(name)){
 						rsMapOld.get(name).setDc(true);
+					}else{
+						//fix not in json01 but in json02 bug
+						Map<String, KeyResult> rsMapNew =  new HashMap<String, KeyResult>();
+						KeyResult ks = new KeyResult(name,false, true);
+						rsMapOld.put(name, ks);
 					}
 				}
 				
@@ -176,6 +175,8 @@ public class Convert {
 		
 		String path = System.getProperty("user.dir");
 		File convertFile = new File(path + File.separator + name1 +"_vs_"+ name2 +"_" +System.currentTimeMillis() + ".xlsx");
+		
+		System.out.println("save file :" + convertFile.getAbsolutePath());
 		
     	FileOutputStream fileOut = null;
     	try {
