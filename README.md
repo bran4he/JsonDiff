@@ -26,7 +26,7 @@ java -jar jsonDiff.jar json_file01 json_file02 > app.log
 
 - result
 
-> {json_file01}_vs_{json_file02}_{currentmils}.xlsx
+> json_file01_vs_json_file02_currentmils.xlsx
 
 ### SAMPLE
 [json_file01](/compare01.json)
