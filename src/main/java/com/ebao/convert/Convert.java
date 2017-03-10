@@ -31,6 +31,8 @@ public class Convert {
 	//root node numbers
 	private static int itemNum = 0;
 	
+	private static Workbook wb = null;
+	
 	/**
 	 * read string from file and parse to JsonObject(Gson)
 	 * @param fileName
@@ -81,9 +83,14 @@ public class Convert {
 		
 		System.out.println("current path: " + System.getProperty("user.dir"));
 		
-		Map<String, List<String>> mapCore = getMapData(getJson(args[0]));
-		Map<String, List<String>> mapDc = getMapData(getJson(args[1]));
+		String name1 = args[0];
+		String name2 = args[1];
+		System.out.println("compare json files are: " + name1 +", " + name2);
+		
+		Map<String, List<String>> mapCore = getMapData(getJson(name1));
+		Map<String, List<String>> mapDc = getMapData(getJson(name2));
 
+		exportOverAllSum(mapCore, mapDc, name1, name2);
 		
 		//<"Policy", <"POI", {"POI", Y, Y}>>
 		Map<String, Map<String, KeyResult>> result = new HashMap<String, Map<String, KeyResult>>();
@@ -138,6 +145,42 @@ public class Convert {
 		System.out.println("execute end");
 	}
 	
+	private static void exportOverAllSum(Map<String, List<String>> map1, Map<String, List<String>> map2, 
+										String name1, String name2){
+		wb = new XSSFWorkbook();
+		Sheet sheet = wb.createSheet("OverallCompare");
+		
+		Row row = sheet.createRow(0);
+		row.createCell(0).setCellValue("Node Name");
+		row.createCell(1).setCellValue(name1);
+		row.createCell(2).setCellValue(name2);
+		
+		Set<String> k1set = map1.keySet();
+		Set<String> k2set = map2.keySet();
+		int idx = 1;
+		for(String key : k1set){
+			Row r = sheet.createRow(idx);
+			r.createCell(0).setCellValue(key);
+			r.createCell(1).setCellValue(true);
+			if(k2set.contains(key)){
+				r.createCell(2).setCellValue(true);
+			}else{
+				r.createCell(2).setCellValue(false);
+			}
+			idx++;
+		}
+		
+		for(String key : k2set){
+			if(!k1set.contains(key)){
+				Row r = sheet.createRow(idx);
+				r.createCell(0).setCellValue(key);
+				r.createCell(1).setCellValue(false);
+				r.createCell(2).setCellValue(true);
+				idx++;
+			}
+		}
+	}
+	
 	/**
 	 * export to excel with result Map data
 	 * @param result
@@ -145,8 +188,7 @@ public class Convert {
 	 * @param name2
 	 */
 	private static void export(Map<String, Map<String, KeyResult>> result, String name1, String name2){
-		Workbook wb = new XSSFWorkbook();
-		Sheet sheet = wb.createSheet("json compare sheet");
+		Sheet sheet = wb.createSheet("FiledsCompare");
 		
 		Row row = sheet.createRow(0);
 		row.createCell(0).setCellValue("Node Name");
