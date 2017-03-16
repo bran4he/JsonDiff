@@ -13,7 +13,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -42,13 +41,20 @@ public class Convert {
 	private static JsonObject getJson(String fileName) throws Exception{
 		String path = System.getProperty("user.dir");
 		
+		//java8 stream
+//		StringBuilder sb = new StringBuilder();
+//		try (Stream<String> line = Files.lines(new File(path + File.separator + fileName).toPath())){
+//			line.onClose(() -> System.out.println("read completed!")).forEach(sb::append);
+//		} 
+//		System.out.println(sb.toString());
+		
+		
 		BufferedReader br = new BufferedReader(new FileReader(path + File.separator + fileName));
 		String line = null;
 		StringBuilder sb = new StringBuilder();
 		while ((line = br.readLine()) != null) {
 			sb.append(line);
 		}
-
 		System.out.println("============get json from :" + fileName);
 		System.out.println(sb.toString());
 		
@@ -68,7 +74,6 @@ public class Convert {
 		System.out.println("json1:==================");
 		System.out.println(gson.toJson(map));
 		
-		Map<String, List<String>> mapDc = new HashMap<String, List<String>>();
 		return map;
 	}
 	
